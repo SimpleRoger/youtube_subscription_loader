@@ -5,15 +5,23 @@ import "firebase/auth";
 import { useRouter } from "next/router";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase";
+import { useDispatch } from "react-redux";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const dispatch = useDispatch();
   const handleSignIn = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       router.push("/videos");
+      dispatch(
+        setUser({
+          name: displayName,
+          email: currentUser.email,
+        })
+      );
     } catch (error) {
       console.error("Sign-in error:", error);
     }
