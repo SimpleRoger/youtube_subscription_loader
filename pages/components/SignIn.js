@@ -2,14 +2,18 @@
 import { useState } from "react";
 import firebase from "firebase/app";
 import "firebase/auth";
+import { useRouter } from "next/router";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/firebase";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const router = useRouter();
   const handleSignIn = async () => {
     try {
-      await firebase.auth().signInWithEmailAndPassword(email, password);
+      await signInWithEmailAndPassword(auth, email, password);
+      router.push("/videos");
     } catch (error) {
       console.error("Sign-in error:", error);
     }
@@ -32,7 +36,6 @@ const SignIn = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <button onClick={handleSignIn}>Sign In</button>
-
     </div>
   );
 };

@@ -2,16 +2,40 @@
 import { useState } from "react";
 import firebase from "firebase/app";
 import { auth } from "@/firebase";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [displayName, setDisplayName] = useState(""); // New state variable for name
+  const dispatch = useDispatch();
 
+  const router = useRouter();
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      await auth.createUserWithEmailAndPassword(email, password);
-      // User signed up successfully, you can redirect or show a success message
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      ); // User signed up successfully, you can redirect or show a success message
+      await updateProfile(auth.currentUser, {
+        displayName: displayName,
+      });
+      dispatch(
+        setUser({
+          name: displayName,
+          email: currentUser.email,
+        })
+      );
+      router.push("videos");
     } catch (error) {
       console.error("Error signing up:", error);
       // Handle and display the error to the user
@@ -20,6 +44,13 @@ const SignUp = () => {
 
   return (
     <div className="flex flex-col max-w-[600px] gap-y-5 border-2 p-10">
+      <input
+        type="text" // Change to text for the name field
+        placeholder="First Name" // Change to "Name"
+        value={displayName}
+        className="p-4"
+        onChange={(e) => setDisplayName(e.target.value)} // Update the state variable
+      />
       <input
         type="email"
         placeholder="Email"
