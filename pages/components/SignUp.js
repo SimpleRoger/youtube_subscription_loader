@@ -10,6 +10,7 @@ import {
 } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
+import { setUser } from "@/redux/userSlice";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -32,7 +33,7 @@ const SignUp = () => {
       dispatch(
         setUser({
           name: displayName,
-          email: currentUser.email,
+          email: email,
         })
       );
       router.push("videos");

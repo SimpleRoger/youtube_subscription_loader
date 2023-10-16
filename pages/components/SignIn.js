@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase";
 import { useDispatch } from "react-redux";
+import { setUser } from "@/redux/userSlice";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -16,10 +17,18 @@ const SignIn = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       router.push("/videos");
+      const { currentUser } = useAuth(); // Replace with how you access the Firebase user
+      useEffect(() => {
+        if (currentUser) {
+          const email = currentUser.email;
+          const name = currentUser.name;
+          console.log('User Email:', email);
+        }
+      }, [currentUser]);
       dispatch(
         setUser({
-          name: displayName,
-          email: currentUser.email,
+          name: "hi",
+          email: email,
         })
       );
     } catch (error) {

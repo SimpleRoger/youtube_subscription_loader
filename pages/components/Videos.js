@@ -37,10 +37,11 @@ export default function Videos() {
 
   // Videos are fetched, you can now access them
   //   console.log(videos.etag);
-  let videoss = videos.items;
+  let videoItems = videos.items;
+  console.log(videoItems);
   return (
     <div>
-      {videoss.map((video) => (
+      {videoItems?.map((video) => (
         <VideoPlayer key={video.id.videoId} videoId={video.id.videoId} />
       ))}
     </div>
