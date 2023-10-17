@@ -5,10 +5,10 @@ export default function Videos() {
   const [videos, setVideos] = useState(null);
   function VideoPlayer({ videoId }) {
     return (
-      <div>
+      <div className="w-screen mx-auto flex justify-center">
         <iframe
-          width="560"
-          height="315"
+          width="70%"
+          height="600"
           src={`https://www.youtube.com/embed/${videoId}`}
           title={`YouTube Video - ${videoId}`}
           frameBorder="0"
@@ -37,12 +37,18 @@ export default function Videos() {
 
   // Videos are fetched, you can now access them
   //   console.log(videos.etag);
-  let videoItems = videos.items;
-  console.log(videoItems);
+  console.log("VIDEOS");
+  console.log(videos);
   return (
-    <div>
-      {videoItems?.map((video) => (
-        <VideoPlayer key={video.id.videoId} videoId={video.id.videoId} />
+    <div className="flex flex-col gap-10">
+      {videos?.map((videoGroup, groupIndex) => (
+        <div key={groupIndex} className="flex flex-col gap-10">
+          {videoGroup.map((video, videoIndex) => (
+            <div key={videoIndex}>
+              <VideoPlayer key={video.id.videoId} videoId={video.id.videoId} />
+            </div>
+          ))}
+        </div>
       ))}
     </div>
   );
