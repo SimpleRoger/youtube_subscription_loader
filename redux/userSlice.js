@@ -12,6 +12,7 @@ const userSlice = createSlice({
     setUser: (state, action) => {
       state.name = action.payload.name;
       state.email = action.payload.email;
+      state.uid = action.payload.uid
     },
 
     signOutUser: (state) => {

@@ -1,42 +1,56 @@
-// SignIn.js
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import firebase from "firebase/app";
 import { auth } from "@/firebase";
 import {
+  browserLocalPersistence,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
-  signInWithEmailAndPassword,
+  setPersistence,
   updateProfile,
 } from "firebase/auth";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router"; // Changed "next/navigation" to "next/router"
 import { useDispatch } from "react-redux";
 import { setUser } from "@/redux/userSlice";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [displayName, setDisplayName] = useState(""); // New state variable for name
+  const [displayName, setDisplayName] = useState("");
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (!currentUser) return;
+      // console.log(currentUser.uid)
+      dispatch(
+        setUser({
+          name: currentUser.displayName,
+          email: currentUser.email,
+          uid: currentUser.uid,
+        })
+      );
+    });
+
+    // Don't forget to return the cleanup function
+    return () => unsubscribe();
+  }, [dispatch]);
 
   const router = useRouter();
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
+      await setPersistence(auth, browserLocalPersistence);
       const userCredentials = await createUserWithEmailAndPassword(
         auth,
         email,
         password
-      ); // User signed up successfully, you can redirect or show a success message
+      );
+
       await updateProfile(auth.currentUser, {
         displayName: displayName,
       });
-      dispatch(
-        setUser({
-          name: displayName,
-          email: email,
-        })
-      );
-      router.push("videos");
+
+      router.push("/videos"); // Changed "videos" to "/videos" assuming it's a route
     } catch (error) {
       console.error("Error signing up:", error);
       // Handle and display the error to the user
@@ -46,11 +60,11 @@ const SignUp = () => {
   return (
     <div className="flex flex-col max-w-[600px] gap-y-5 border-2 p-10">
       <input
-        type="text" // Change to text for the name field
-        placeholder="First Name" // Change to "Name"
+        type="text"
+        placeholder="First Name"
         value={displayName}
         className="p-4"
-        onChange={(e) => setDisplayName(e.target.value)} // Update the state variable
+        onChange={(e) => setDisplayName(e.target.value)}
       />
       <input
         type="email"
