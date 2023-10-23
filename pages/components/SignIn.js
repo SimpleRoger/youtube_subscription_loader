@@ -41,6 +41,7 @@ const SignIn = () => {
           setUser({
             name: userName,
             email: userEmail,
+            uid: user.uid,
           })
         );
       }
