@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   name: null,
   email: null,
+  uid: null,
 };
 
 const userSlice = createSlice({
@@ -16,7 +17,7 @@ const userSlice = createSlice({
     },
 
     signOutUser: (state) => {
-      (state.username = null), (state.name = null), (state.email = null);
+      (state.uid = null), (state.name = null), (state.email = null);
     },
   },
 });

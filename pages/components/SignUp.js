@@ -21,7 +21,7 @@ const SignUp = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (!currentUser) return;
-      // console.log(currentUser.uid)
+      console.log("UID" + currentUser.uid)
       dispatch(
         setUser({
           name: currentUser.displayName,

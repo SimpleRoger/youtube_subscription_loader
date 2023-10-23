@@ -17,7 +17,7 @@ export default function Videos() {
       </div>
     );
   }
- 
+
   useEffect(() => {
     async function fetchVideos() {
       try {
@@ -27,8 +27,9 @@ export default function Videos() {
         console.error("Error fetching videos:", error);
       }
     }
-
-    fetchVideos();
+    if (videos == null) {
+      fetchVideos();
+    }
   }, []);
 
   // Wait until videos are fetched before rendering

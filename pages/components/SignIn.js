@@ -36,6 +36,7 @@ const SignIn = () => {
         const userEmail = user.email;
         const userName = user.displayName;
         console.log("User Email:", userEmail);
+        router.push("/videos");
         dispatch(
           setUser({
             name: userName,
