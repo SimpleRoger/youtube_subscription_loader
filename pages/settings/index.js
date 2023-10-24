@@ -12,11 +12,35 @@ import {
   getDoc,
   arrayRemove,
 } from "firebase/firestore";
-import { db } from "@/firebase";
-import { useSelector } from "react-redux";
+import { auth, db } from "@/firebase";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "../components/Header";
+import { setUser } from "@/redux/userSlice";
 
 export default function index() {
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+      const user = auth.currentUser;
+      if (currentUser) {
+        const userEmail = user.email;
+        console.log(user);
+        console.log("HELLO");
+        dispatch(
+          setUser({
+            name: user.name,
+            email: user.email,
+            uid: user.uid,
+          })
+        );
+        setLoading(false);
+        getEntries();
+      }
+    });
+    return unsubscribe;
+  }, []);
   const getEntries = async () => {
     const docRef = doc(db, "users", user.uid);
     const docSnap = await getDoc(docRef);
@@ -31,9 +55,8 @@ export default function index() {
   const [entries, setEntries] = useState([]);
   const [newEntry, setNewEntry] = useState("");
   const user = useSelector((state) => state.user);
-  useEffect(() => {
-    getEntries();
-  }, []);
+  console.log(user);
+
   const deleteEntry = async (entry) => {
     const userRef = doc(db, "users", user.uid);
     console.log(entry);
@@ -60,7 +83,7 @@ export default function index() {
     <>
       <Header />
       <div className="max-w-[1200px] mx-auto text-center">
-        <h1>My List</h1>
+        <h1>Subscriptions</h1>
         <ul>
           {entries?.map((entry) => (
             <li key={entry.id}>
