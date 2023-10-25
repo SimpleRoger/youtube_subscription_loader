@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
 // import { database } from "../firebase";
+import getChannelId from "../api/getChannnelId";
+
 import {
   collection,
   addDoc,
@@ -20,6 +22,7 @@ import { setUser } from "@/redux/userSlice";
 export default function index() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
+  const [entries, setEntries] = useState([]);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
@@ -35,33 +38,39 @@ export default function index() {
             uid: user.uid,
           })
         );
+        if (user.uid != null) {
+          getEntries(user.uid);
+          console.log("ENTIRES", entries);
+          if (entries != []) {
+            console.log("ENTIRES", entries);
+            getChannelId(entries);
+          }
+        }
       }
     });
 
     return unsubscribe;
   }, [dispatch]);
-  const getEntries = async () => {
+  const getEntries = async (uid) => {
     if (loading == true) {
-      console.log(user.uid);
-
-      const docRef = doc(db, "users", user.uid);
+      console.log(uid);
+      const docRef = doc(db, "users", uid);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         const posts = docSnap.data();
-        console.log(posts);
+        console.log("POSTS", posts);
+        console.log(posts.subscriptions);
         setEntries(posts.subscriptions);
+        console.log("ENTRIES", entries);
       } else {
         createUser();
       }
     }
   };
-  const [entries, setEntries] = useState([]);
   const [newEntry, setNewEntry] = useState("");
   const user = useSelector((state) => state.user);
   console.log(user);
-  if (user.uid != null) {
-    getEntries();
-  }
+
   const deleteEntry = async (entry) => {
     const userRef = doc(db, "users", user.uid);
     console.log(entry);
@@ -76,6 +85,7 @@ export default function index() {
       subscriptions: arrayUnion(newEntry),
     });
     getEntries();
+    setNewEntry("");
   };
   const createUser = async () => {
     await setDoc(doc(db, "users", user.uid), {
@@ -87,9 +97,9 @@ export default function index() {
   return (
     <>
       <Header />
-      <div className="max-w-[1200px] mx-auto text-center">
+      <div className="max-w-[700px] mx-auto text-center flex flex-col gap-y-10">
         <h1>Subscriptions</h1>
-        <ul>
+        <ul className="flex flex-col gap-y-8">
           {entries?.map((entry) => (
             <li key={entry.id}>
               {entry}
@@ -101,6 +111,7 @@ export default function index() {
         </ul>
         <input
           type="text"
+          className="text-center"
           placeholder="Add an entry"
           value={newEntry}
           onChange={(e) => setNewEntry(e.target.value)}
