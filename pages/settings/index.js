@@ -35,28 +35,33 @@ export default function index() {
             uid: user.uid,
           })
         );
-        setLoading(false);
-        getEntries();
       }
     });
+
     return unsubscribe;
-  }, []);
+  }, [dispatch]);
   const getEntries = async () => {
-    const docRef = doc(db, "users", user.uid);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      const posts = docSnap.data();
-      console.log(posts);
-      setEntries(posts.subscriptions);
-    } else {
-      createUser();
+    if (loading == true) {
+      console.log(user.uid);
+
+      const docRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const posts = docSnap.data();
+        console.log(posts);
+        setEntries(posts.subscriptions);
+      } else {
+        createUser();
+      }
     }
   };
   const [entries, setEntries] = useState([]);
   const [newEntry, setNewEntry] = useState("");
   const user = useSelector((state) => state.user);
   console.log(user);
-
+  if (user.uid != null) {
+    getEntries();
+  }
   const deleteEntry = async (entry) => {
     const userRef = doc(db, "users", user.uid);
     console.log(entry);
