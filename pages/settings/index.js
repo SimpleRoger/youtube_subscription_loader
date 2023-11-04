@@ -97,8 +97,19 @@ export default function index() {
   return (
     <>
       <Header />
-      <div className="max-w-[700px] mx-auto text-center flex flex-col gap-y-10">
+      <div className="max-w-[700px] mx-auto text-center flex flex-col gap-y-10 pb-10">
         <h1>Subscriptions</h1>
+        <h2>Paste your Youtube Channel ID below</h2>
+        <h5>
+          If you want to find the YouTube user ID from a YouTube channel link,
+          you can use the following method: <br />Visit the YouTube Channel: Open the
+          YouTube channel using the link provided. <br /> Access the Channel Page: Go
+          to the channel's main page. <br /> Extract the User ID: The user ID is
+          usually a part of the channel's URL. It appears after "channel/". For
+          example, if the channel's URL is
+          "https://www.youtube.com/channel/UC9c_6EJOhuEfg6swbv7-2Ew," then
+          "UC9c_6EJOhuEfg6swbv7-2Ew" is the user ID.
+        </h5>
         <ul className="flex flex-col gap-y-8">
           {entries?.map((entry) => (
             <li key={entry.id}>

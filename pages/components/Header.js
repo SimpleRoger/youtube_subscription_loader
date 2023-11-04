@@ -19,14 +19,20 @@ export default function Header() {
   }
 
   return (
-    <div className="flex items-center justify-center w-full mx-10 my-10 text-center">
-      <div className="flex justify-center items-center">
+    <div className="flex items-center justify-center w-full my-10 text-center">
+      <div
+        className="flex justify-center items-center cursor-pointer"
+        onClick={() => {
+          router.push("/videos");
+        }}
+      >
         <img
           src="./assets/YouTube_social_white_square_(2017).svg.webp"
           className="w-10"
         />
         Youtube Subscription Loader !
       </div>
+
       {router.pathname === "/videos" && (
         <>
           <div
@@ -38,10 +44,7 @@ export default function Header() {
             Settings
           </div>
 
-          <div
-            className="absolute right-[5%] cursor-pointer"
-            onClick={logOut}
-          >
+          <div className="absolute right-[5%] cursor-pointer" onClick={logOut}>
             Logout
           </div>
         </>
