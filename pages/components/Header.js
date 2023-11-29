@@ -25,7 +25,6 @@ export default function Header() {
         onClick={() => {
           router.push("/videos");
         }}
-        
       >
         Subscription Loader !
       </div>
