@@ -105,12 +105,12 @@ export default function Index() {
           If you want to find the YouTube user ID from a YouTube channel link,
           you can use the following method: <br />
           Visit the YouTube Channel: Open the YouTube channel using the link
-          provided. <br /> Access the Channel Page: Go to the channel's main
+          provided. <br /> Access the Channel Page: Go to the channel&apos;s main
           page. <br /> Extract the User ID: The user ID is usually a part of the
-          channel's URL. It appears after "channel/". For example, if the
-          channel's URL is
-          "https://www.youtube.com/channel/UC9c_6EJOhuEfg6swbv7-2Ew," then
-          "UC9c_6EJOhuEfg6swbv7-2Ew" is the user ID.
+          channel&apos;s URL. It appears after &quot;channel/&quot;. For example, if the
+          channel&apos;s URL is
+          &quot;https://www.youtube.com/channel/UC9c_6EJOhuEfg6swbv7-2Ew,&quot; then
+          &quot;UC9c_6EJOhuEfg6swbv7-2Ew&quot; is the user ID.
         </h5>
         <ul className="flex flex-col gap-y-8">
           {entries?.map((entry) => (
