@@ -25,12 +25,9 @@ export default function Header() {
         onClick={() => {
           router.push("/videos");
         }}
+        
       >
-        <img
-          src="./assets/YouTube_social_white_square_(2017).svg.webp"
-          className="w-10"
-        />
-        Youtube Subscription Loader !
+        Subscription Loader !
       </div>
 
       {router.pathname === "/videos" && (

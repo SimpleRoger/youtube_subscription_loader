@@ -52,10 +52,11 @@ export default function index() {
     return unsubscribe;
   }, [dispatch]);
   const getEntries = async (uid) => {
-    if (loading == true) {
-      console.log(uid);
+    if (loading == true && uid) {
+      console.log("UID", uid);
+      console.log("DB", db);
       const docRef = doc(db, "users", uid);
-      const docSnap = await getDoc(docRef);
+      const docSnap = await getDoc(docRef); 
       if (docSnap.exists()) {
         const posts = docSnap.data();
         console.log("POSTS", posts);
@@ -77,14 +78,14 @@ export default function index() {
     await updateDoc(userRef, {
       subscriptions: arrayRemove(entry),
     });
-    getEntries();
+    getEntries(user.uid);
   };
   const addEntry = async () => {
     const userRef = doc(db, "users", user.uid);
     await updateDoc(userRef, {
       subscriptions: arrayUnion(newEntry),
     });
-    getEntries();
+    getEntries(user.uid);
     setNewEntry("");
   };
   const createUser = async () => {
@@ -102,11 +103,12 @@ export default function index() {
         <h2>Paste your Youtube Channel ID below</h2>
         <h5>
           If you want to find the YouTube user ID from a YouTube channel link,
-          you can use the following method: <br />Visit the YouTube Channel: Open the
-          YouTube channel using the link provided. <br /> Access the Channel Page: Go
-          to the channel's main page. <br /> Extract the User ID: The user ID is
-          usually a part of the channel's URL. It appears after "channel/". For
-          example, if the channel's URL is
+          you can use the following method: <br />
+          Visit the YouTube Channel: Open the YouTube channel using the link
+          provided. <br /> Access the Channel Page: Go to the channel's main
+          page. <br /> Extract the User ID: The user ID is usually a part of the
+          channel's URL. It appears after "channel/". For example, if the
+          channel's URL is
           "https://www.youtube.com/channel/UC9c_6EJOhuEfg6swbv7-2Ew," then
           "UC9c_6EJOhuEfg6swbv7-2Ew" is the user ID.
         </h5>
