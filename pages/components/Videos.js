@@ -76,9 +76,9 @@ export default function Videos({ user }) {
     <div className="flex flex-col gap-10">
       <div className="flex flex-col gap-10">
         {parsedData.map((videoArray, index) => (
-          <div className="flex flex-col gap-10">
+          <div key={index} className="flex flex-col gap-10">
             {videoArray.map((video) => (
-              <div className="flex flex-col gap-10">
+              <div key={video.id.videoId} className="flex flex-col gap-10">
                 <div key={video.id.videoId}>
                   <iframe
                     width="560"
