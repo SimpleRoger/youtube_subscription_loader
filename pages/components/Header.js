@@ -28,6 +28,14 @@ export default function Header() {
       >
         Subscription Loader !
       </div>
+      <div
+        className="absolute right-[30%] cursor-pointer"
+        onClick={() => {
+          router.push("/terms");
+        }}
+      >
+        Terms Of Service
+      </div>
 
       {router.pathname === "/videos" && (
         <>
