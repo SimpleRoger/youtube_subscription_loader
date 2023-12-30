@@ -14,7 +14,7 @@ const getEntries = async (user) => {
     const posts = docSnap.data();
     return posts.subscriptions;
   } else {
-    createUser(user);
+    // createUser(user);
     return [];
   }
 };
