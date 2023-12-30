@@ -21,21 +21,21 @@ export default function Header() {
   return (
     <div className="flex items-center justify-center w-full my-10 text-center">
       <div
-        className="flex justify-center items-center cursor-pointer"
+        className="flex justify-center items-center cursor-pointer w-[50%]"
         onClick={() => {
           router.push("/videos");
         }}
       >
         Subscription Loader !
       </div>
-      <div
+      {/* <div
         className="absolute right-[30%] cursor-pointer"
         onClick={() => {
           router.push("/terms");
         }}
       >
         Terms Of Service
-      </div>
+      </div> */}
 
       {router.pathname === "/videos" && (
         <>
@@ -43,12 +43,12 @@ export default function Header() {
             onClick={() => {
               router.push("/settings");
             }}
-            className="absolute right-[15%] cursor-pointer"
+            className=" cursor-pointer"
           >
             Settings
           </div>
 
-          <div className="absolute right-[5%] cursor-pointer" onClick={logOut}>
+          <div className="cursor-pointer" onClick={logOut}>
             Logout
           </div>
         </>

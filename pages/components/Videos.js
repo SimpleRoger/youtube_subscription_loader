@@ -79,9 +79,9 @@ export default function Videos({ user }) {
           <div key={index} className="flex flex-col gap-10">
             {videoArray.map((video) => (
               <div key={video.id.videoId} className="flex flex-col gap-10">
-                <div key={video.id.videoId}>
+                <div key={video.id.videoId} className="max-w-[1500px]">
                   <iframe
-                    width="560"
+                    width="100%"
                     height="315"
                     src={`https://www.youtube.com/embed/${video.id.videoId}`}
                     title={`YouTube Video - ${video.id.videoId}`}

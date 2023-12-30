@@ -20,6 +20,10 @@ import Header from "../components/Header";
 import { setUser } from "@/redux/userSlice";
 
 export default function Index() {
+
+
+
+  
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [entries, setEntries] = useState([]);

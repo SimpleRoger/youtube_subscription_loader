@@ -34,7 +34,7 @@ export default function Index() {
     return unsubscribe;
   }, [dispatch]);
   return (
-    <div className="max-w-[1060px] mx-auto flex flex-col items-center justify-center">
+    <div className="max-w-[1060px] mx-auto flex flex-col items-center justify-center w-full">
       {/* <h1>HIGH</h1> */}
       {!Loading && (
         <>
