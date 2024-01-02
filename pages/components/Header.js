@@ -5,6 +5,8 @@ import { auth } from "@/firebase";
 import { signOutUser } from "@/redux/userSlice";
 import { signOut } from "firebase/auth";
 import { useDispatch } from "react-redux";
+import Image from "next/image";
+import { CiLogout, CiSettings } from "react-icons/ci";
 
 export default function Header() {
   const router = useRouter();
@@ -19,14 +21,19 @@ export default function Header() {
   }
 
   return (
-    <div className="flex items-center justify-center w-full my-10 text-center">
+    <div className="flex items-center justify-center w-full my-10 text-center flex-col md:flex-row">
       <div
         className="flex justify-center items-center cursor-pointer w-[50%]"
         onClick={() => {
           router.push("/videos");
         }}
       >
-        Subscription Loader !
+        <Image
+          src="/assets/logo.png" // Path relative to the public directory
+          alt="My Image Alt Text"
+          width={200} // Set the width of the image
+          height={30} // Set the height of the image
+        />
       </div>
       {/* <div
         className="absolute right-[30%] cursor-pointer"
@@ -38,20 +45,22 @@ export default function Header() {
       </div> */}
 
       {router.pathname === "/videos" && (
-        <>
+        <div className="flex space-x-10">
           <div
             onClick={() => {
               router.push("/settings");
             }}
-            className=" cursor-pointer"
+            className=" cursor-pointer flex items-center"
           >
+            <CiSettings />
             Settings
           </div>
 
-          <div className="cursor-pointer" onClick={logOut}>
+          <div className="cursor-pointer flex items-center" onClick={logOut}>
+            <CiLogout />
             Logout
           </div>
-        </>
+        </div>
       )}
     </div>
   );

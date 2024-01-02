@@ -39,7 +39,7 @@ export default function Index() {
       {!Loading && (
         <>
           <Header />
-          <h1 className="pb-8">Welcome {userName}</h1>
+          <h1 className="pb-8">Welcome {userName} 👋</h1>
           <Videos user={user} />
         </>
       )}

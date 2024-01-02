@@ -73,7 +73,7 @@ export default function Videos({ user }) {
   // Map through the data and display each video
 
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-10 w-full">
       <div className="flex flex-col gap-10">
         {parsedData.map((videoArray, index) => (
           <div key={index} className="flex flex-col gap-10">
